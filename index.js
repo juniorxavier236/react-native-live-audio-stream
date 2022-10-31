@@ -9,10 +9,10 @@ AudioRecord.start = () => RNLiveAudioStream.start();
 AudioRecord.stop = () => RNLiveAudioStream.stop();
 
 
-AudioRecord.initTrack = options => RNLiveAudioStream.initTrack(options);
-AudioRecord.startTrack = () => RNLiveAudioStream.startTrack();
-AudioRecord.stopTrack = () => RNLiveAudioStream.stopTrack();
-AudioRecord.write = options => RNLiveAudioStream.write(options);
+// AudioRecord.initTrack = options => RNLiveAudioStream.initTrack(options);
+// AudioRecord.startTrack = () => RNLiveAudioStream.startTrack();
+// AudioRecord.stopTrack = () => RNLiveAudioStream.stopTrack();
+// AudioRecord.write = options => RNLiveAudioStream.write(options);
 
 const eventsMap = {
   data: 'data'
