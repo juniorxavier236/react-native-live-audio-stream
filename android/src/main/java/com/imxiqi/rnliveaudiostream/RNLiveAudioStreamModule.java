@@ -263,7 +263,7 @@ public class RNLiveAudioStreamModule extends ReactContextBaseJavaModule {
 
         if (enable != audioManager.isSpeakerphoneOn())  {
             Log.d("setSpeakerphoneOn", "setSpeakerphoneOn(): " + enable);
-            audioManager.setMode(AudioManager.MODE_IN_CALL);
+            audioManager.setMode(AudioManager.MODE_IN_COMMUNICATION);
             audioManager.setSpeakerphoneOn(enable);
         }
     }
