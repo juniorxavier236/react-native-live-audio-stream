@@ -246,7 +246,6 @@ public class RNLiveAudioStreamModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void setSpeakerphoneon(final boolean enable) {
         if (enable != audioManager.isSpeakerphoneOn())  {
-            Log.d(TAG, "setSpeakerphoneOn(): " + enable);
             audioManager.setSpeakerphoneOn(enable);
         }
     }
@@ -254,7 +253,6 @@ public class RNLiveAudioStreamModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void setMicrophoneMute(final boolean enable) {
         if (enable != audioManager.isMicrophoneMute())  {
-            Log.d(TAG, "setMicrophoneMute(): " + enable);
             audioManager.setMicrophoneMute(enable);
         }
     }
