@@ -14,7 +14,7 @@ Audio.stopPlay = () => RNLiveAudioStream.stopPlay();
 Audio.writePlay = base64 => RNLiveAudioStream.writePlay(base64);
 Audio.setVolumePlay = options => RNLiveAudioStream.setVolumePlay(options);
 
-Audio.setSpeakerphoneon = options => RNLiveAudioStream.setSpeakerphoneon(options);
+Audio.setSpeakerphoneOn = options => RNLiveAudioStream.setSpeakerphoneOn(options);
 Audio.setMicrophoneMute = options => RNLiveAudioStream.setMicrophoneMute(options);
 
 const eventsMap = {
