@@ -214,9 +214,9 @@ public class RNLiveAudioStreamModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void playTrack() {
-        if (audioTrack != null) {
-            audioTrack.play();
+    public void playPlay() {
+        if (audioPlay != null) {
+            audioPlay.play();
         }
     }
 
