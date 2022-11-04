@@ -245,24 +245,9 @@ public class RNLiveAudioStreamModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void setSpeakerphoneon(final boolean enable) {
-        Thread thread = new Thread() {
-            @Override
-            public void run() {
-                try {
-                    while(true) {
-                        sleep(1000);
-                        audioManager.setMode(AudioManager.MODE_IN_CALL);
-                        if (enable != audioManager.isSpeakerphoneOn())  {
-                            audioManager.setSpeakerphoneOn(enable);
-                        }
-                    }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-
-        thread.start();
+        if (enable != audioManager.isSpeakerphoneOn())  {
+            audioManager.setSpeakerphoneOn(enable);
+        }
     }
 
     @ReactMethod
