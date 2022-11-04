@@ -58,6 +58,8 @@ public class RNLiveAudioStreamModule extends ReactContextBaseJavaModule {
     public RNLiveAudioStreamModule(ReactApplicationContext reactContext) {
         super(reactContext);
         this.reactContext = reactContext;
+        audioManager = ((AudioManager) reactContext.getSystemService(Context.AUDIO_SERVICE));
+
         //play sound
         if (audioPlay != null) {
             audioPlay.stop();
@@ -252,12 +254,11 @@ public class RNLiveAudioStreamModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void setSpeakerphoneOn(final boolean enable) {
-        AudioManager audiomanager = (AudioManager)context.getSystemService("audio");
+        audioManager.setMode(AudioManager.MODE_IN_COMMUNICATION);
         if (enable != audioManager.isSpeakerphoneOn())  {
             Log.d("setSpeakerphoneOn", "setSpeakerphoneOn(): " + enable);
             audioManager.setSpeakerphoneOn(enable);
         }
-        audioManager.setMode(AudioManager.MODE_IN_COMMUNICATION);
 
     }
 
