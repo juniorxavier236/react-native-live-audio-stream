@@ -58,7 +58,7 @@ public class RNLiveAudioStreamModule extends ReactContextBaseJavaModule {
     public RNLiveAudioStreamModule(ReactApplicationContext reactContext) {
         super(reactContext);
         this.reactContext = reactContext;
-        audioManager = ((AudioManager) reactContext.getSystemService(Context.AUDIO_SERVICE));
+        audioManager = ((AudioManager) this.reactContext.getSystemService(Context.AUDIO_SERVICE));
 
         //play sound
         if (audioPlay != null) {
