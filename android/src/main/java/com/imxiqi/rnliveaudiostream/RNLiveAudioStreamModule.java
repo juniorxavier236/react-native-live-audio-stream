@@ -47,7 +47,6 @@ public class RNLiveAudioStreamModule extends ReactContextBaseJavaModule {
     private int bufferSize;
     private boolean isRecording;
 
-    private AudioManager audioManager;
 
     // play sound
 
@@ -58,7 +57,6 @@ public class RNLiveAudioStreamModule extends ReactContextBaseJavaModule {
     public RNLiveAudioStreamModule(ReactApplicationContext reactContext) {
         super(reactContext);
         this.reactContext = reactContext;
-        audioManager = ((AudioManager) this.reactContext.getSystemService(Context.AUDIO_SERVICE));
 
         //play sound
         if (audioPlay != null) {
@@ -252,23 +250,8 @@ public class RNLiveAudioStreamModule extends ReactContextBaseJavaModule {
     //     }
     // }
 
-    @ReactMethod
-    public void setSpeakerphoneon(final boolean enable) {
-        audioManager.setMode(AudioManager.MODE_IN_COMMUNICATION);
-        if (enable != audioManager.isSpeakerphoneOn())  {
-            Log.d("setSpeakerphoneOn", "setSpeakerphoneOn(): " + enable);
-            audioManager.setSpeakerphoneOn(enable);
-        }
-
-    }
 
 
-    @ReactMethod
-    public void setMicrophoneMute(final boolean enable) {
-        if (enable != audioManager.isMicrophoneMute())  {
-            audioManager.setMicrophoneMute(enable);
-        }
-    }
     // @ReactMethod
     // public void write(String base64String) {
     // byte[] bytesArray = Base64.decode(base64String, Base64.NO_WRAP);
