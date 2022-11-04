@@ -243,12 +243,31 @@ public class RNLiveAudioStreamModule extends ReactContextBaseJavaModule {
         }
     }
 
+    // @ReactMethod
+    // public void setSpeakerphoneon(final boolean enable) {
+    //     if (enable != audioManager.isSpeakerphoneOn())  {
+    //         audioManager.setSpeakerphoneOn(enable);
+    //     }
+    // }
+
     @ReactMethod
-    public void setSpeakerphoneon(final boolean enable) {
+    public void setSpeakerphoneOn(final boolean enable) {
+        try {
+            Class audioSystemClass = Class.forName("android.media.AudioSystem");
+            Method setForceUse = audioSystemClass.getMethod("setForceUse", int.class, int.class);
+            setForceUse.invoke(null, 1, 1);
+        }catch (Exception err){
+            err.printStackTrace();
+        }
+
+
         if (enable != audioManager.isSpeakerphoneOn())  {
+            Log.d("setSpeakerphoneOn", "setSpeakerphoneOn(): " + enable);
+            audioManager.setMode(AudioManager.MODE_IN_CALL);
             audioManager.setSpeakerphoneOn(enable);
         }
     }
+
 
     @ReactMethod
     public void setMicrophoneMute(final boolean enable) {
