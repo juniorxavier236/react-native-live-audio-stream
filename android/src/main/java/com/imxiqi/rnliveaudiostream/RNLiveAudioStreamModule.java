@@ -47,7 +47,7 @@ public class RNLiveAudioStreamModule extends ReactContextBaseJavaModule {
     private int bufferSize;
     private boolean isRecording;
 
-    private AudioManager audioManager;
+    private AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
 
     // play sound
 
@@ -245,7 +245,6 @@ public class RNLiveAudioStreamModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void setSpeakerphoneon(final boolean enable) {
-        AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
         if (enable != audioManager.isSpeakerphoneOn())  {
             audioManager.setSpeakerphoneOn(enable);
         }
@@ -253,7 +252,6 @@ public class RNLiveAudioStreamModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void setMicrophoneMute(final boolean enable) {
-        AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
         if (enable != audioManager.isMicrophoneMute())  {
             audioManager.setMicrophoneMute(enable);
         }
