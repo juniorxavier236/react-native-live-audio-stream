@@ -2,23 +2,26 @@ import { NativeModules, NativeEventEmitter } from 'react-native';
 const { RNLiveAudioStream } = NativeModules;
 const EventEmitter = new NativeEventEmitter(RNLiveAudioStream);
 
-const AudioRecord = {};
+const Audio = {};
 
-AudioRecord.init = options => RNLiveAudioStream.init(options);
-AudioRecord.start = () => RNLiveAudioStream.start();
-AudioRecord.stop = () => RNLiveAudioStream.stop();
+Audio.initRecord = options => RNLiveAudioStream.initRecord(options);
+Audio.startRecord = () => RNLiveAudioStream.startRecord();
+Audio.stopRecord = () => RNLiveAudioStream.stopRecord();
 
+Audio.initPlay = options => RNLiveAudioStream.initPlay(options);
+Audio.startPlay = () => RNLiveAudioStream.startPlay();
+Audio.stopPlay = () => RNLiveAudioStream.stopPlay();
+Audio.writePlay = base64 => RNLiveAudioStream.writePlay(base64);
+Audio.setVolumePlay = options => RNLiveAudioStream.setVolumePlay(options);
 
-// AudioRecord.initTrack = options => RNLiveAudioStream.initTrack(options);
-// AudioRecord.startTrack = () => RNLiveAudioStream.startTrack();
-// AudioRecord.stopTrack = () => RNLiveAudioStream.stopTrack();
-// AudioRecord.write = options => RNLiveAudioStream.write(options);
+Audio.setSpeakerphoneon = options => RNLiveAudioStream.setSpeakerphoneon(options);
+Audio.setMicrophoneMute = options => RNLiveAudioStream.setMicrophoneMute(options);
 
 const eventsMap = {
   data: 'data'
 };
 
-AudioRecord.on = (event, callback) => {
+Audio.on = (event, callback) => {
   const nativeEvent = eventsMap[event];
   if (!nativeEvent) {
     throw new Error('Invalid event');
@@ -27,4 +30,4 @@ AudioRecord.on = (event, callback) => {
   return EventEmitter.addListener(nativeEvent, callback);
 };
 
-export default AudioRecord;
+export default Audio;

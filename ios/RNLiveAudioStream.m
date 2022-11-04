@@ -4,8 +4,8 @@
 
 RCT_EXPORT_MODULE();
 
-RCT_EXPORT_METHOD(init:(NSDictionary *) options) {
-    RCTLogInfo(@"[RNLiveAudioStream] init");
+RCT_EXPORT_METHOD(initRecord:(NSDictionary *) options) {
+    RCTLogInfo(@"[RNLiveAudioStream] initRecord");
     _recordState.mDataFormat.mSampleRate        = options[@"sampleRate"] == nil ? 44100 : [options[@"sampleRate"] doubleValue];
     _recordState.mDataFormat.mBitsPerChannel    = options[@"bitsPerSample"] == nil ? 16 : [options[@"bitsPerSample"] unsignedIntValue];
     _recordState.mDataFormat.mChannelsPerFrame  = options[@"channels"] == nil ? 1 : [options[@"channels"] unsignedIntValue];
@@ -19,8 +19,8 @@ RCT_EXPORT_METHOD(init:(NSDictionary *) options) {
     _recordState.mSelf = self;
 }
 
-RCT_EXPORT_METHOD(start) {
-    RCTLogInfo(@"[RNLiveAudioStream] start");
+RCT_EXPORT_METHOD(startRecord) {
+    RCTLogInfo(@"[RNLiveAudioStream] startRecord");
     AVAudioSession *audioSession = [AVAudioSession sharedInstance];
     NSError *error = nil;
     BOOL success;
@@ -58,8 +58,8 @@ RCT_EXPORT_METHOD(start) {
     AudioQueueStart(_recordState.mQueue, NULL);
 }
 
-RCT_EXPORT_METHOD(stop) {
-    RCTLogInfo(@"[RNLiveAudioStream] stop");
+RCT_EXPORT_METHOD(stopRecord) {
+    RCTLogInfo(@"[RNLiveAudioStream] stopRecord");
     if (_recordState.mIsRunning) {
         _recordState.mIsRunning = false;
         AudioQueueStop(_recordState.mQueue, true);
@@ -99,5 +99,57 @@ void HandleInputBuffer(void *inUserData,
     RCTLogInfo(@"[RNLiveAudioStream] dealloc");
     AudioQueueDispose(_recordState.mQueue, true);
 }
+
+RCT_EXPORT_METHOD(setSpeakerphoneOn:(BOOL)enable)
+{
+    BOOL success;
+    NSError *error = nil;
+    NSArray* routes = [_audioSession availableInputs];
+
+    if(!enable){
+        NSLog(@"Routing audio via Earpiece");
+        @try {
+            success = [_audioSession setCategory:AVAudioSessionCategoryPlayAndRecord error:&error];
+            if (!success)  NSLog(@"Cannot set category due to error: %@", error);
+            success = [_audioSession setMode:AVAudioSessionModeVoiceChat error:&error];
+            if (!success)  NSLog(@"Cannot set mode due to error: %@", error);
+            [_audioSession setPreferredOutputNumberOfChannels:0 error:nil];
+            if (!success)  NSLog(@"Port override failed due to: %@", error);
+            [_audioSession overrideOutputAudioPort:[AVAudioSessionPortBuiltInReceiver intValue] error:&error];
+            success = [_audioSession setActive:YES error:&error];
+            if (!success) NSLog(@"Audio session override failed: %@", error);
+            else NSLog(@"AudioSession override is successful ");
+
+        } @catch (NSException *e) {
+            NSLog(@"Error occurred while routing audio via Earpiece: %@", e.reason);
+        }
+    } else {
+        NSLog(@"Routing audio via Loudspeaker");
+        @try {
+            NSLog(@"Available routes: %@", routes[0]);
+            success = [_audioSession setCategory:AVAudioSessionCategoryPlayAndRecord
+                        withOptions:AVAudioSessionCategoryOptionDefaultToSpeaker
+                        error:nil];
+            if (!success)  NSLog(@"Cannot set category due to error: %@", error);
+            success = [_audioSession setMode:AVAudioSessionModeVoiceChat error: &error];
+            if (!success)  NSLog(@"Cannot set mode due to error: %@", error);
+            [_audioSession setPreferredOutputNumberOfChannels:0 error:nil];
+            [_audioSession overrideOutputAudioPort:[AVAudioSessionPortBuiltInSpeaker intValue] error: &error];
+            if (!success)  NSLog(@"Port override failed due to: %@", error);
+            success = [_audioSession setActive:YES error:&error];
+            if (!success) NSLog(@"Audio session override failed: %@", error);
+            else NSLog(@"AudioSession override is successful ");
+        } @catch (NSException *e) {
+            NSLog(@"Error occurred while routing audio via Loudspeaker: %@", e.reason);
+        }
+    }
+}
+
+
+RCT_EXPORT_METHOD(setMicrophoneMute:(BOOL)enable)
+{
+    NSLog(@"RNInCallManager.setMicrophoneMute(): ios doesn't support setMicrophoneMute()");
+}
+
 
 @end
