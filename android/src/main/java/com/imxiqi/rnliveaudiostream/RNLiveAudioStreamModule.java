@@ -100,10 +100,12 @@ public class RNLiveAudioStreamModule extends ReactContextBaseJavaModule {
             }
         }
 
-        audioSource = AudioSource.VOICE_RECOGNITION;
-        if (options.hasKey("audioSource")) {
-            audioSource = options.getInt("audioSource");
-        }
+        // audioSource = AudioSource.VOICE_RECOGNITION;
+
+        audioSource = AudioSource.VOICE_COMMUNICATION;
+        // if (options.hasKey("audioSource")) {
+        //     audioSource = options.getInt("audioSource");
+        // }
 
         isRecording = false;
         eventEmitter = reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class);
